@@ -162,14 +162,17 @@ public class BuildPostProcessor
             var appDataPath = Application.dataPath;
             var parentFolder = Directory.GetParent(appDataPath).FullName;
             var tdsResourcePath = "";
-            var assetLocalPackagePath = "Assets/Plugins/iOS/resources";
             var remotePackagePath = FilterFileByPrefix(parentFolder + "/Library/PackageCache/", $"com.tapsdk.antiaddiction@");
+            var assetLocalPackagePath = FilterFileByPrefix(parentFolder + "/Assets/", "Plugins");
+            var localPackagePath = FilterFileByPrefix(parentFolder, "AntiAddiction");
 
             if (!string.IsNullOrEmpty(remotePackagePath))
             {
                 tdsResourcePath = remotePackagePath + "/Plugins/iOS/resources";
+            } else if (!string.IsNullOrEmpty(assetLocalPackagePath)){
+                tdsResourcePath = assetLocalPackagePath + "/iOS/resources";
             } else {
-                tdsResourcePath = assetLocalPackagePath;
+                tdsResourcePath = localPackagePath + "/Plugins/iOS/resources";
             }
 
             Debug.Log("tdsResourcePath:" + tdsResourcePath);
