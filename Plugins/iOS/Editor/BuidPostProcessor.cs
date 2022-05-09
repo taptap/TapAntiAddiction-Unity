@@ -169,10 +169,10 @@ public class BuildPostProcessor
             if (!string.IsNullOrEmpty(remotePackagePath))
             {
                 tdsResourcePath = remotePackagePath + "/Plugins/iOS/resources";
-            } else if (!string.IsNullOrEmpty(assetLocalPackagePath)){
-                tdsResourcePath = assetLocalPackagePath + "/iOS/resources";
-            } else {
+            } else if (!string.IsNullOrEmpty(localPackagePath)){
                 tdsResourcePath = localPackagePath + "/Plugins/iOS/resources";
+            } else {
+                tdsResourcePath = assetLocalPackagePath + "/iOS/resources";
             }
 
             Debug.Log("tdsResourcePath:" + tdsResourcePath);
