@@ -1,15 +1,18 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
 // swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AntiAddictionService
 import AntiAddictionAsyncHttp
 @_exported import AntiAddictionService
 import CommonCrypto
 import CoreTelephony
 import Foundation
+import ObjectiveC
 import Swift
 import SystemConfiguration
+import TapCommonSDK
 import UIKit
-extension Collection {
+import _Concurrency
+extension Swift.Collection {
   public subscript(safe index: Self.Index) -> Self.Iterator.Element? {
     get
   }
@@ -60,9 +63,9 @@ extension Collection {
   @objc final public class func enableLog(enable: Swift.Bool)
   @objc final public class func setFunctionConfig(_ useSdkPaymentLimit: Swift.Bool = true, _ useSdkOnlineTimeLimit: Swift.Bool = true)
   @objc final public class func setFunctionConfig(_ useSdkPaymentLimit: Swift.Bool = true, _ useSdkOnlineTimeLimit: Swift.Bool = true, _ showSwitchAccount: Swift.Bool = true)
-  @objc final public class func getConfig(_ clinentId: Swift.String, completionHandler: ((Swift.Bool) -> Swift.Void)? = nil)
+  @objc final public class func getConfig(_ clinentId: Swift.String, completionHandler: ((_ suceess: Swift.Bool) -> Swift.Void)? = nil)
   @objc final public class func `init`(_ delegate: AntiAddictionService.AntiAddictionServiceCallback, gameIdentifier: Swift.String? = nil)
-  @objc final public class func tapTokenLogin(kid: Swift.String, mackey: Swift.String, clientID: Swift.String, successHandler: ((Swift.String, Swift.String, Swift.String) -> Swift.Void)? = nil, failureHandler: ((Swift.String) -> Swift.Void)? = nil)
+  @objc final public class func tapTokenLogin(kid: Swift.String, mackey: Swift.String, clientID: Swift.String, successHandler: ((_ code: Swift.String) -> Swift.Void)? = nil, failureHandler: ((_ message: Swift.String) -> Swift.Void)? = nil)
   @objc final public class func login(userToken: Swift.String, accessToken: Swift.String, ageLimit: AntiAddictionService.AntiAddictionRealNameAgeLimit)
   @objc final public class func enterGame()
   @objc final public class func leaveGame()
@@ -74,16 +77,16 @@ extension Collection {
   @objc final public class func isStandAlone() -> Swift.Bool
   @objc final public class func getchildNightStrictRemainDesc() -> Swift.String
   @objc final public class func checkCurrentPayLimit(_ amount: Swift.Int) -> Swift.Int
-  @objc final public class func checkPayLimit(_ amount: Swift.Int, callBack: ((Swift.Bool, Swift.String, Swift.String) -> Swift.Void)? = nil, failureHandler: ((Swift.String) -> Swift.Void)? = nil)
-  @objc final public class func submitPayResult(_ amount: Swift.Int, _ callBack: ((Swift.Bool) -> Swift.Void)? = nil, _ failureHandler: ((Swift.String) -> Swift.Void)? = nil)
+  @objc final public class func checkPayLimit(_ amount: Swift.Int, callBack: ((_ status: Swift.Bool, _ title: Swift.String, _ description: Swift.String) -> Swift.Void)? = nil, failureHandler: ((_ message: Swift.String) -> Swift.Void)? = nil)
+  @objc final public class func submitPayResult(_ amount: Swift.Int, _ callBack: ((_ success: Swift.Bool) -> Swift.Void)? = nil, _ failureHandler: ((_ message: Swift.String) -> Swift.Void)? = nil)
   @objc final public class func isHoliday() -> Swift.Bool
   @objc final public class func generateIDCode() -> Swift.String
   @objc final public class func startTimeStatic(isLogin: Swift.Bool = false)
   @objc final public class func stopTimeStatic()
-  @objc final public class func realNameAuth(clientId: Swift.String, userId: Swift.String, code: Swift.String, name: Swift.String, idCard: Swift.String, completion: @escaping (AntiAddictionService.AntiAddictionRealNameAuthState, Swift.String, AntiAddictionService.AntiAddictionRealNameAgeLimit) -> (), failureHandler: @escaping (Swift.String) -> ())
-  @objc final public class func checkRealnameState(clientId: Swift.String, userId: Swift.String, completion: @escaping (AntiAddictionService.AntiAddictionRealNameAuthState, Swift.String, AntiAddictionService.AntiAddictionRealNameAgeLimit) -> (), failureHandler: @escaping (Swift.String) -> ())
-  @objc final public class func checkTapTapRealnameState(clientId: Swift.String, userId: Swift.String, code: Swift.String, completion: @escaping (AntiAddictionService.AntiAddictionRealNameAuthState, Swift.String, AntiAddictionService.AntiAddictionRealNameAgeLimit) -> (), failureHandler: @escaping (Swift.String) -> ())
-  @objc final public class func checkPlayTimeResult(handler: @escaping (Swift.String?) -> Swift.Void) -> Swift.String?
+  @objc final public class func realNameAuth(clientId: Swift.String, userId: Swift.String, code: Swift.String, name: Swift.String, idCard: Swift.String, completion: @escaping (AntiAddictionService.AntiAddictionRealNameAuthState, Swift.String, AntiAddictionService.AntiAddictionRealNameAgeLimit) -> (), failureHandler: @escaping (_ errorMessage: Swift.String) -> ())
+  @objc final public class func checkRealnameState(clientId: Swift.String, userId: Swift.String, completion: @escaping (_ identifyState: AntiAddictionService.AntiAddictionRealNameAuthState, _ antiAddictionToken: Swift.String, _ ageLimit: AntiAddictionService.AntiAddictionRealNameAgeLimit) -> (), failureHandler: @escaping (_ errorMessage: Swift.String) -> ())
+  @objc final public class func checkTapTapRealnameState(clientId: Swift.String, userId: Swift.String, code: Swift.String, completion: @escaping (_ identifyState: AntiAddictionService.AntiAddictionRealNameAuthState, _ antiAddictionToken: Swift.String, _ ageLimit: AntiAddictionService.AntiAddictionRealNameAgeLimit) -> (), failureHandler: @escaping (_ errorMessage: Swift.String) -> ())
+  @objc final public class func checkPlayTimeResult(handler: @escaping (_ result: Swift.String?) -> Swift.Void) -> Swift.String?
   @objc deinit
 }
 public struct HashidsOptions {
@@ -186,20 +189,20 @@ public class SwiftTimer {
   public func rescheduleRepeating(interval: Dispatch.DispatchTimeInterval)
   public func rescheduleHandler(handler: @escaping AntiAddictionService.SwiftTimer.SwiftTimerHandler)
 }
-extension SwiftTimer {
+extension AntiAddictionService.SwiftTimer {
   public static func debounce(interval: Dispatch.DispatchTimeInterval, identifier: Swift.String, queue: Dispatch.DispatchQueue = .main, handler: @escaping () -> Swift.Void)
   public static func throttle(interval: Dispatch.DispatchTimeInterval, identifier: Swift.String, queue: Dispatch.DispatchQueue = .main, handler: @escaping () -> Swift.Void)
   public static func cancelThrottlingTimer(identifier: Swift.String)
 }
 public class SwiftCountDownTimer {
   final public let originalTimes: Swift.Int
-  public init(interval: Dispatch.DispatchTimeInterval, times: Swift.Int, queue: Dispatch.DispatchQueue = .main, handler: @escaping (AntiAddictionService.SwiftCountDownTimer, Swift.Int, Swift.Int) -> Swift.Void)
+  public init(interval: Dispatch.DispatchTimeInterval, times: Swift.Int, queue: Dispatch.DispatchQueue = .main, handler: @escaping (AntiAddictionService.SwiftCountDownTimer, _ costTimes: Swift.Int, _ leftTimes: Swift.Int) -> Swift.Void)
   public func start()
   public func suspend()
   public func reCountDown()
   @objc deinit
 }
-extension DispatchTimeInterval {
+extension Dispatch.DispatchTimeInterval {
   public static func fromSeconds(_ seconds: Swift.Double) -> Dispatch.DispatchTimeInterval
 }
 public enum ReachabilityError : Swift.Error {
@@ -211,7 +214,7 @@ public enum ReachabilityError : Swift.Error {
 }
 @available(*, unavailable, renamed: "Notification.Name.reachabilityChanged")
 public let ReachabilityChangedNotification: Foundation.NSNotification.Name
-extension NSNotification.Name {
+extension Foundation.NSNotification.Name {
   public static let reachabilityChanged: Foundation.Notification.Name
 }
 public class Reachability {
@@ -264,7 +267,7 @@ public class Reachability {
   convenience public init(queueQoS: Dispatch.DispatchQoS = .default, targetQueue: Dispatch.DispatchQueue? = nil, notificationQueue: Dispatch.DispatchQueue? = .main) throws
   @objc deinit
 }
-extension Reachability {
+extension AntiAddictionService.Reachability {
   public func startNotifier() throws
   public func stopNotifier()
   @available(*, deprecated, message: "Please use `connection != .none`")
@@ -300,7 +303,7 @@ final public class Defaults {
   final public func removeAll(bundle: Foundation.Bundle = Bundle.main)
   @objc deinit
 }
-extension Defaults {
+extension AntiAddictionService.Defaults {
   final public func get<ValueType>(for key: AntiAddictionService.Key<ValueType>) -> ValueType? where ValueType : Swift.Decodable, ValueType : Swift.Encodable, ValueType : Swift.RawRepresentable, ValueType.RawValue : Swift.Decodable, ValueType.RawValue : Swift.Encodable
   final public func set<ValueType>(_ value: ValueType, for key: AntiAddictionService.Key<ValueType>) where ValueType : Swift.Decodable, ValueType : Swift.Encodable, ValueType : Swift.RawRepresentable, ValueType.RawValue : Swift.Decodable, ValueType.RawValue : Swift.Encodable
 }

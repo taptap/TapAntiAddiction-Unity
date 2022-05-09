@@ -2,7 +2,7 @@
   "name": "com.tapsdk.antiaddiction",
   "displayName": "AntiAddiction",
   "description": "AntiAddiction Service",
-  "version": "1.2.0",
-  "unity": "2018.3",
+  "version": "3.7.1",
+  "unity": "2019.4",
   "license": "MIT"
 }
