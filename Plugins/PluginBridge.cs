@@ -69,7 +69,7 @@ namespace Plugins.AntiAddictionUIKit
     public static class AntiAddictionUIKit
     {
         // Game object is created to receive async messages
-        private const string UNITY_SDK_VERSION = "3.8.0";
+        private const string UNITY_SDK_VERSION = "3.9.0";
         private const string GAME_OBJECT_NAME = "PluginBridge";
         private static GameObject gameObject;
 

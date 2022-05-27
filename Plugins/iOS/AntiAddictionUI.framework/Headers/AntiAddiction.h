@@ -10,8 +10,8 @@
 #import <AntiAddictionService/AntiAddictionHttpManager.h>
 
 #define AntiAddictionSDK @"AntiAddiction"
-#define AntiAddictionSDK_VERSION_NUMBER @"30800001"
-#define AntiAddictionSDK_VERSION        @"3.8.0"
+#define AntiAddictionSDK_VERSION_NUMBER @"30900001"
+#define AntiAddictionSDK_VERSION        @"3.9.0"
 
 NS_ASSUME_NONNULL_BEGIN
 
