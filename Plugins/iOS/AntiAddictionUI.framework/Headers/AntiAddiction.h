@@ -9,6 +9,10 @@
 #import <AntiAddictionService/AntiAddictionService-Swift.h>
 #import <AntiAddictionService/AntiAddictionHttpManager.h>
 
+#define AntiAddictionSDK @"AntiAddiction"
+#define AntiAddictionSDK_VERSION_NUMBER @"30800001"
+#define AntiAddictionSDK_VERSION        @"3.8.0"
+
 NS_ASSUME_NONNULL_BEGIN
 
 
