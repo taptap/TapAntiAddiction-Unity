@@ -28,7 +28,7 @@ PluginImporter:
     second:
       enabled: 1
       settings:
-        AddToEmbeddedBinaries: false
+        AddToEmbeddedBinaries: true
   userData: 
   assetBundleName: 
   assetBundleVariant: 

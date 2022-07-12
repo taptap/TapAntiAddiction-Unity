@@ -12,4 +12,6 @@
 // cookie
 + (NSString *)cookieStringForUrl:(NSString *)url;
 
++ (NSString *)urlEncodedString:(NSString *)string;
+
 @end
