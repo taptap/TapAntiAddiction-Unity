@@ -1,0 +1,11 @@
+{
+  "name": "com.tapsdk.antiaddiction",
+  "displayName": "AntiAddiction",
+  "description": "AntiAddiction Service",
+  "version": "3.12.5",
+  "unity": "2019.4",
+  "license": "MIT",
+  "dependencies": {
+    "com.taptap.tds.bootstrap": "https://github.com/TapTap/TapCommon-Unity.git#3.12.1"
+  }
+}
