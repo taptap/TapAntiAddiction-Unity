@@ -1,0 +1,5 @@
+<linker>
+  <assembly fullname="TapTap.AntiAddiction" preserve="all" />
+  <assembly fullname="TapTap.AntiAddiction.Runtime" preserve="all" />
+  <assembly fullname="TapTap.AntiAddiction.Mobile.Runtime" preserve="all" />
+</linker>
