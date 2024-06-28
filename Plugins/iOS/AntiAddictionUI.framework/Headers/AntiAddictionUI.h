@@ -15,8 +15,8 @@ FOUNDATION_EXPORT const unsigned char AntiAddictionUIVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <AntiAddictionUI/PublicHeader.h>
 
-#define AntiAddictionSDK_VERSION_NUMBER @"32901001"
-#define AntiAddictionSDK_VERSION        @"3.29.1"
+#define AntiAddictionSDK_VERSION_NUMBER @"32902001"
+#define AntiAddictionSDK_VERSION        @"3.29.2"
 
 #import <AntiAddictionUI/AntiAddictionConfig.h>
 #import <AntiAddictionUI/AntiAddiction.h>
